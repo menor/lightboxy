@@ -1,23 +1,37 @@
 (function($) {
   $.fn.lightboxy = function(prop) {
 
-    // Default parameters
-    var options = $.extend({
-      height : "250",
-      width : "500",
-      title:"JQuery Lightboxy",
-      description: "A jQuery lightbox plugin built for the sake of it.",
-      top: "20%",
-      left: "30%",
-    },prop);
-
     return this.click(function(e) {
-         console.log('one');
-         add_overly();
-         console.log('two');
-         add_styles();
-         console.log('three');
+     e.preventDefault();
+     console.log('one');
+     getLinks();
+     add_overly();
+     console.log('two');
+     add_styles();
+     console.log('three');
     });
+
+    function Collection(){
+      this.elements = [];
+    };
+
+    function Element( opts ){
+      this.url = opts.url;
+      this.title = opts.title || '';
+    };
+
+    function getLinks(){
+      var col = new Collection();
+      $.each( $('.lightboxy'), function(i, v){
+        var opts = {
+          'url': $(this).attr('href'),
+          'title': $(this).attr('title')
+        }
+        var element = new Element( opts );
+        col.elements.push( element );
+      });
+      console.log(col);
+    }
 
     function add_overly(){
       var overly = "<div id='overly'></div>"
