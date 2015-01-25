@@ -1,0 +1,21 @@
+body {
+    margin:0;
+    padding:0;
+    background:#efefef;
+    text-align:center;
+}
+#wrapper {
+    width:600px;
+    margin:0 auto;
+    background:#fff;
+    text-align:left;
+    border:1px solid #ccc;
+    border-top:none;
+    padding:25px; 
+    border-radius:0 0 5px 5px;
+    -moz-border-radius:0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    box-shadow:0 0 5px #ccc;
+    -moz-box-shadow:0 0 5px #ccc;
+    -webkit-box-shadow:0 0 5px #ccc;
+}
