@@ -1,19 +1,30 @@
 (function($) {
   $.fn.lightboxy = function(prop) {
 
-    return this.click(function(e) {
-     e.preventDefault();
-     console.log('one');
-     getLinks();
-     add_lightbox();
-     console.log('two');
-     add_styles();
-     console.log('three');
-    });
+    // Initialize the plugin
+    init();
+
+
+    // Here we bind this to each jQuery object that calls the plugin
+    this.bind("click", function(e){
+      e.preventDefault();
+      this.url = $(this).attr('href');
+      console.log('Binded with url ' + this.url );
+      showLightbox( this.url );
+    })
+
+    function init(){
+      // We add the lighbox div if it isn't there
+      if(!$('#lightboxy-overly').length){
+        addLightbox();
+        addStyles();
+      }
+      getLinks();
+    }
 
     function Collection(){
       this.elements = [];
-    };
+    }
 
     function Element( opts ){
       this.url = opts.url;
@@ -33,7 +44,14 @@
       console.log(col);
     }
 
-    function add_lightbox(){
+    function bindLinks(){
+      this.on('click', function(e){
+        e.preventDefault();
+        console.log("I'm binded");
+      });
+    }
+
+    function addLightbox(){
       var lightbox = "<div id='lightboxy-overly'>"+
                         "<div id='lightboxy-lightbox'>"+
                           "<img id='lightboxy-image' src='' alt='Lightboxy Image' />"+
@@ -48,7 +66,7 @@
         console.log('lightbox');
       }
 
-    function add_styles() {
+    function addStyles() {
       $("#lightboxy-overly").css({
         'position': 'absolute',
         'vertical-align': 'middle',
@@ -69,15 +87,24 @@
       });
       $("#lightboxy-image").css({
         'width': '100%',
-        'height': '100%',
+        'height': 'auto',
         'max-width': '100%',
         'vertical-align': 'middle',
         'border': '3px solid white'
       });
+      $("#lightboxy-overly").hide();
       console.log('styles_added');
     }
 
-    return this;
+    function showLightbox( image ){
+      $("#lightboxy-image").attr('src', image);
+      $("#lightboxy-overly").show();
+      console.log(this.collection);
+    }
+
+    return this.each(function() {
+      init();
+    });
   };
 
 }(jQuery));
