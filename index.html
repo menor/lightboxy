@@ -7,7 +7,11 @@
   <script src="js/jquery.lightboxy.js"></script>
   <script>
   $(document).ready( function() {
-      $(".lightboxy-trigger").on("click", lightboxy());
+      $(".lightboxy-trigger").click( function(e) {
+        e.preventDefault();
+        var image_link = $(this).attr("href");
+        alert(image_link);
+      })
   });
   </script>
   <link rel="stylesheet" href="css/styles.css">
@@ -20,17 +24,17 @@
     <p>Simple jQuery lightbox plugin. Click on the links to try it:</p>
     <ul>
       <li>
-        <a href="images/image-1.jpg" class="lightboxy_trigger">
+        <a href="images/image-1.jpg" class="lightboxy-trigger">
         Picture 1
         </a>
       </li>
       <li>
-        <a href="images/image-2.jpg" class="lightboxy_trigger">
+        <a href="images/image-2.jpg" class="lightboxy-trigger">
         Picture 2
         </a>
       </li>
       <li>
-        <a href="images/image-3.jpg" class="lightboxy_trigger">
+        <a href="images/image-3.jpg" class="lightboxy-trigger">
         Picture 3
         </a>
       </li>
