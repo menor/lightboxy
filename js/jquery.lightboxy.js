@@ -48,8 +48,8 @@
                         "<div id='lightboxy-lightbox'>"+
                           "<img id='lightboxy-image' src='' alt='Lightboxy Image' />"+
                           "<div id='lightboxy-controls'>"+
-                            "<span id='lightboxy-left'>\<</span>"+
-                            "<span id='lightboxy-right'>\></span>"+
+                            "<span id='lightboxy-prev'>\<</span>"+
+                            "<span id='lightboxy-next'>\></span>"+
                             "<span id='lightboxy-close'>X</span>"+
                           "</div>"+
                         "</div>"+
@@ -92,7 +92,28 @@
         'font-size': '40px',
         'padding': '5px',
         'background': 'black',
-        'color': 'white'
+        'color': 'white',
+        'cursor': 'pointer'
+      });
+      $("#lightboxy-prev").css({
+        'position': 'absolute',
+        'top': '40%',
+        'left': '-35px',
+        'font-size': '40px',
+        'padding': '5px',
+        'background': 'black',
+        'color': 'white',
+        'cursor': 'pointer'
+      });
+      $("#lightboxy-next").css({
+        'position': 'absolute',
+        'top': '40%',
+        'right': '-35px',
+        'font-size': '40px',
+        'padding': '5px',
+        'background': 'black',
+        'color': 'white',
+        'cursor': 'pointer'
       });
       bindCloseButton();
       $("#lightboxy-overly").hide();
