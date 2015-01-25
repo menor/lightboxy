@@ -8,6 +8,7 @@
     this.on("click", function(e){
       e.preventDefault();
       this.url = $(this).attr('href');
+      $(this).addClass('.lightboxy-active');
       showLightbox( this.url );
     })
 
@@ -104,13 +105,18 @@
       console.log(this.collection);
     }
 
-    function bindCloseButton(){
-      console.log('binding');
-      $('#lightboxy-close').on('click', closeLightbox() );
-    }
-
     function closeLightbox(){
       $("#lightboxy-overly").hide();
+    }
+
+    function bindCloseButton(){
+      console.log('binding');
+      $('#lightboxy-overly').on('click', '#lightboxy-close', function(){closeLightbox();} );
+    }
+
+
+    function showNextImage(){
+
     }
 
     return this.each(function() {
