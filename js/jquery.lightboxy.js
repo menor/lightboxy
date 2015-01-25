@@ -4,12 +4,10 @@
     // Initialize the plugin
     init();
 
-
     // Here we bind this to each jQuery object that calls the plugin
-    this.bind("click", function(e){
+    this.on("click", function(e){
       e.preventDefault();
       this.url = $(this).attr('href');
-      console.log('Binded with url ' + this.url );
       showLightbox( this.url );
     })
 
@@ -44,21 +42,14 @@
       console.log(col);
     }
 
-    function bindLinks(){
-      this.on('click', function(e){
-        e.preventDefault();
-        console.log("I'm binded");
-      });
-    }
-
     function addLightbox(){
       var lightbox = "<div id='lightboxy-overly'>"+
                         "<div id='lightboxy-lightbox'>"+
                           "<img id='lightboxy-image' src='' alt='Lightboxy Image' />"+
                           "<div id='lightboxy-controls'>"+
-                            "<span id='lightboxy-left'></span>"+
-                            "<span id='lightboxy-right'></span>"+
-                            "<span id='lightboxy-close'></span>"+
+                            "<span id='lightboxy-left'>\<</span>"+
+                            "<span id='lightboxy-right'>\></span>"+
+                            "<span id='lightboxy-close'>X</span>"+
                           "</div>"+
                         "</div>"+
                       "</div>";
@@ -78,6 +69,7 @@
         'z-index':'10'
       });
       $("#lightboxy-lightbox").css({
+        'position': 'relative',
         'width': '50%',
         'height': 'auto',
         'display': 'inline-block',
@@ -92,6 +84,16 @@
         'vertical-align': 'middle',
         'border': '3px solid white'
       });
+      $("#lightboxy-close").css({
+        'position': 'absolute',
+        'top': '0',
+        'right': '0',
+        'font-size': '40px',
+        'padding': '5px',
+        'background': 'black',
+        'color': 'white'
+      });
+      bindCloseButton();
       $("#lightboxy-overly").hide();
       console.log('styles_added');
     }
@@ -100,6 +102,15 @@
       $("#lightboxy-image").attr('src', image);
       $("#lightboxy-overly").show();
       console.log(this.collection);
+    }
+
+    function bindCloseButton(){
+      console.log('binding');
+      $('#lightboxy-close').on('click', closeLightbox() );
+    }
+
+    function closeLightbox(){
+      $("#lightboxy-overly").hide();
     }
 
     return this.each(function() {
