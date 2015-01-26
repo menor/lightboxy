@@ -10,7 +10,7 @@
       this.url = $(this).attr('href');
       $(this).addClass('lightboxy-active');
       showLightbox( this.url );
-    })
+    });
 
     function init(){
       // We add the lighbox div if it isn't there
@@ -18,38 +18,46 @@
         addLightbox();
         addStyles();
       }
-      // getLinks();
     }
 
-    // function Collection(){
-    //   this.elements = [];
-    // }
-    //
-    // function Element( opts ){
-    //   this.url = opts.url;
-    //   this.title = opts.title || '';
-    // };
-    //
-    // function getLinks(){
-    //   var col = new Collection();
-    //   $.each( $('.lightboxy'), function(i, v){
-    //     var opts = {
-    //       'url': $(this).attr('href'),
-    //       'title': $(this).attr('title')
-    //     }
-    //     var element = new Element( opts );
-    //     col.elements.push( element );
-    //   });
-    //   console.log(col);
-    // }
+    function showLightbox( image ){
+      $("#lightboxy-image").attr('src', image);
+      $("#lightboxy-overly").show();
+    }
+
+    function closeLightbox(){
+      $("#lightboxy-overly").hide();
+    }
+
+    function bindNavButtons(){
+      $('#lightboxy-overly').on('click', '#lightboxy-close', function(){closeLightbox();} );
+      $('#lightboxy-overly').on('click', '#lightboxy-next', function(){showNextImage();} );
+      $('#lightboxy-overly').on('click', '#lightboxy-prev', function(){showNextImage('reverse');} );
+    }
+
+    function showNextImage( direction ){
+      var current = $( ".lightboxy-active" );
+      var next;
+      if (direction === 'reverse') {
+        next = current.parent().prev().children();
+      }
+      else {
+        next = current.parent().next().children();
+      }
+      if ( next.hasClass('lightboxy') ){
+        current.removeClass('lightboxy-active');
+        next.addClass('lightboxy-active');
+        showLightbox( next.attr('href') );
+      }
+    }
 
     function addLightbox(){
       var lightbox = "<div id='lightboxy-overly'>"+
                         "<div id='lightboxy-lightbox'>"+
                           "<img id='lightboxy-image' src='' alt='Lightboxy Image' />"+
                           "<div id='lightboxy-controls'>"+
-                            "<span id='lightboxy-prev'>\<</span>"+
-                            "<span id='lightboxy-next'>\></span>"+
+                            "<span id='lightboxy-prev'><</span>"+
+                            "<span id='lightboxy-next'>></span>"+
                             "<span id='lightboxy-close'>X</span>"+
                           "</div>"+
                         "</div>"+
@@ -116,36 +124,6 @@
       });
       bindNavButtons();
       $("#lightboxy-overly").hide();
-    }
-
-    function showLightbox( image ){
-      $("#lightboxy-image").attr('src', image);
-      $("#lightboxy-overly").show();
-    }
-
-    function closeLightbox(){
-      $("#lightboxy-overly").hide();
-    }
-
-    function bindNavButtons(){
-      $('#lightboxy-overly').on('click', '#lightboxy-close', function(){closeLightbox();} );
-      $('#lightboxy-overly').on('click', '#lightboxy-next', function(){showNextImage();} );
-      $('#lightboxy-overly').on('click', '#lightboxy-prev', function(){showNextImage('reverse');} );
-    }
-
-    function showNextImage( direction ){
-      var current = $( ".lightboxy-active" );
-      if (direction === 'reverse') {
-        var next = current.parent().prev().children();
-      }
-      else {
-        var next = current.parent().next().children();
-      }
-      if ( next.hasClass('lightboxy') ){
-        current.removeClass('lightboxy-active');
-        next.addClass('lightboxy-active');
-        showLightbox( next.attr('href') );
-      }
     }
 
     return this.each(function() {
