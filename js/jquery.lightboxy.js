@@ -92,7 +92,7 @@
         'vertical-align': 'middle',
         'border': '3px solid white'
       });
-      $("#lightboxy-close").css({
+      $("#lightboxy-close").css({ 
         'position': 'absolute',
         'top': '0',
         'right': '0',
