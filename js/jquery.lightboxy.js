@@ -8,7 +8,7 @@
     this.on("click", function(e){
       e.preventDefault();
       this.url = $(this).attr('href');
-      $(this).addClass('.lightboxy-active');
+      $(this).addClass('lightboxy-active');
       showLightbox( this.url );
     })
 
@@ -18,30 +18,30 @@
         addLightbox();
         addStyles();
       }
-      getLinks();
+      // getLinks();
     }
 
-    function Collection(){
-      this.elements = [];
-    }
-
-    function Element( opts ){
-      this.url = opts.url;
-      this.title = opts.title || '';
-    };
-
-    function getLinks(){
-      var col = new Collection();
-      $.each( $('.lightboxy'), function(i, v){
-        var opts = {
-          'url': $(this).attr('href'),
-          'title': $(this).attr('title')
-        }
-        var element = new Element( opts );
-        col.elements.push( element );
-      });
-      console.log(col);
-    }
+    // function Collection(){
+    //   this.elements = [];
+    // }
+    //
+    // function Element( opts ){
+    //   this.url = opts.url;
+    //   this.title = opts.title || '';
+    // };
+    //
+    // function getLinks(){
+    //   var col = new Collection();
+    //   $.each( $('.lightboxy'), function(i, v){
+    //     var opts = {
+    //       'url': $(this).attr('href'),
+    //       'title': $(this).attr('title')
+    //     }
+    //     var element = new Element( opts );
+    //     col.elements.push( element );
+    //   });
+    //   console.log(col);
+    // }
 
     function addLightbox(){
       var lightbox = "<div id='lightboxy-overly'>"+
@@ -55,7 +55,6 @@
                         "</div>"+
                       "</div>";
         $(lightbox).appendTo("body");
-        console.log('lightbox');
       }
 
     function addStyles() {
@@ -115,29 +114,38 @@
         'color': 'white',
         'cursor': 'pointer'
       });
-      bindCloseButton();
+      bindNavButtons();
       $("#lightboxy-overly").hide();
-      console.log('styles_added');
     }
 
     function showLightbox( image ){
       $("#lightboxy-image").attr('src', image);
       $("#lightboxy-overly").show();
-      console.log(this.collection);
     }
 
     function closeLightbox(){
       $("#lightboxy-overly").hide();
     }
 
-    function bindCloseButton(){
-      console.log('binding');
+    function bindNavButtons(){
       $('#lightboxy-overly').on('click', '#lightboxy-close', function(){closeLightbox();} );
+      $('#lightboxy-overly').on('click', '#lightboxy-next', function(){showNextImage();} );
+      $('#lightboxy-overly').on('click', '#lightboxy-prev', function(){showNextImage('reverse');} );
     }
 
-
-    function showNextImage(){
-
+    function showNextImage( direction ){
+      var current = $( ".lightboxy-active" );
+      if (direction === 'reverse') {
+        var next = current.parent().prev().children();
+      }
+      else {
+        var next = current.parent().next().children();
+      }
+      if ( next.hasClass('lightboxy') ){
+        current.removeClass('lightboxy-active');
+        next.addClass('lightboxy-active');
+        showLightbox( next.attr('href') );
+      }
     }
 
     return this.each(function() {
